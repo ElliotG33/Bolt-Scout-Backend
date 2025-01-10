@@ -1,52 +1,26 @@
-import dotenv from 'dotenv'; // Import dotenv
-import cron from 'node-cron';
-import connectDB from './db';
-import { processAlerts } from './scheduler';
-import { sendEmail } from './emailService';
+import express from 'express';
+import webhookRouter from './routes/webhook';
+import { startScheduler } from './startScheduler';
+import { AddressInfo } from 'net';
 
-// Load environment variables
-dotenv.config();
+const app = express();
 
-const startScheduler = async () => {
-  try {
-    await connectDB();
+// Mount the webhook router
+app.use(webhookRouter);
 
-    // Schedule the alert processor to run every hour
-    cron.schedule('* * * * *', async () => {
-      console.log(`[${new Date().toISOString()}] Running scheduled task...`);
-      try {
-        await processAlerts();
-        console.log(
-          `[${new Date().toISOString()}] Task completed successfully.`
-        );
-      } catch (error) {
-        console.error(
-          `[${new Date().toISOString()}] Error during task execution:`,
-          error
-        );
-      }
-    });
-
-    console.log(
-      `[${new Date().toISOString()}] Scheduler initialized. Waiting for tasks...`
-    );
-  } catch (error) {
-    console.error(
-      `[${new Date().toISOString()}] Failed to start the scheduler:`,
-      error
-    );
-    process.exit(1);
-  }
-
-  process.on('SIGINT', async () => {
-    console.log(`[${new Date().toISOString()}] Shutting down...`);
-    process.exit(0);
-  });
-
-  process.on('SIGTERM', async () => {
-    console.log(`[${new Date().toISOString()}] Shutting down...`);
-    process.exit(0);
-  });
-};
-
+// Start the scheduler
 startScheduler();
+
+const port = process.env.PORT || 3000;
+const server = app.listen(port, () => {
+  const addressInfo = server.address() as AddressInfo;
+  let address = 'localhost';
+
+  if (addressInfo.address === '::') {
+    address = 'localhost';
+  } else if (addressInfo.address === '0.0.0.0') {
+    address = 'localhost';
+  }
+  console.log(`Server listening at http://${address}:${addressInfo.port}`);
+  console.log(`Webhook endpoint available at http://localhost:${port}/webhook`);
+});
