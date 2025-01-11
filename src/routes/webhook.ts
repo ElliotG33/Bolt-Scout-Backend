@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import Stripe from 'stripe';
+import connectDB from '../db';
 import {
   handleSubscriptionCreated,
   handleSubscriptionDeleted,
@@ -34,19 +35,21 @@ router.post(
     } catch (err) {
       console.log(`⚠️ Webhook signature verification failed.`);
       res.status(400).send(`Stripe Error: ${err}`);
-      // if (err instanceof Stripe.errors.StripeError) {
-      //   // Handle Stripe-specific errors
-      //   console.error(`Stripe Error: ${err.message}`);
-      //   res.status(400).send(`Stripe Error: ${err.message}`);
-      // } else {
-      //   // Handle other types of errors
-      //   console.error(`Unexpected Error: ${err}`);
-      //   res.status(500).send('Internal Server Error');
-      // }
+      /*if (err instanceof Stripe.errors.StripeError) {
+        // Handle Stripe-specific errors
+        console.error(`Stripe Error: ${err.message}`);
+        res.status(400).send(`Stripe Error: ${err.message}`);
+      } else {
+        // Handle other types of errors
+        console.error(`Unexpected Error: ${err}`);
+        res.status(500).send('Internal Server Error');
+      }*/
       return;
     }
     // Successfully constructed event
     console.log('✅ Success:', event.id);
+
+    await connectDB();
 
     // Handle the event
     switch (event.type) {
