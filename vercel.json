@@ -11,14 +11,5 @@
       "src": "/(.*)",
       "dest": "dist/index.js"
     }
-  ],
-  "env": {
-    "MONGO_URI": "@mongo_uri",
-    "APP_URL": "@app_url",
-    "EMAIL_SERVICE_PROVIDER": "@email_service_provider",
-    "EMAIL_APP_USER": "@email_app_user",
-    "EMAIL_APP_PASS": "@email_app_pass",
-    "STRIPE_SECRET_KEY": "@stripe_secret_key",
-    "STRIPE_WEBHOOK_SECRET": "@stripe_webhook_secret"
-  }
+  ]
 }
