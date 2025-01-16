@@ -35,4 +35,7 @@ const server = app.listen(port, () => {
 
   console.log(`Server listening at http://${address}:${addressInfo.port}`);
 });
-export default app;
+//entry point
+export default (req: Request, res: Response) => {
+  app(req, res);
+};
