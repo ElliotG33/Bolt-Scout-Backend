@@ -12,7 +12,7 @@ export const startScheduler = async () => {
     await connectDB();
 
     // Schedule the alert processor to run every hour
-    cron.schedule('* * * * *', async () => {
+    // cron.schedule('* * * * *', async () => {
       console.log(`[${new Date().toISOString()}] Running scheduled task...`);
       try {
         await processAlerts();
@@ -25,11 +25,11 @@ export const startScheduler = async () => {
           error
         );
       }
-    });
+    // });
 
-    console.log(
-      `[${new Date().toISOString()}] Scheduler initialized. Waiting for tasks...`
-    );
+    // console.log(
+    //   `[${new Date().toISOString()}] Scheduler initialized. Waiting for tasks...`
+    // );
   } catch (error) {
     console.error(
       `[${new Date().toISOString()}] Failed to start the scheduler:`,

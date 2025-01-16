@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import webhookRouter from './routes/webhook';
-import { startScheduler } from './startScheduler';
+import startSchedulerRouter from './routes/startScheduler';
 import { AddressInfo } from 'net';
 
 const app = express();
@@ -8,8 +8,8 @@ const app = express();
 // Mount the webhook router
 app.use(webhookRouter);
 
-// Start the scheduler
-startScheduler();
+//Alert Scheduler
+app.use(startSchedulerRouter);
 
 // Catch-all handler for invalid routes
 app.use((req: Request, res: Response) => {
@@ -29,5 +29,4 @@ const server = app.listen(port, () => {
   }
 
   console.log(`Server listening at http://${address}:${addressInfo.port}`);
-  console.log(`Webhook endpoint available at http://localhost:${port}/webhook`);
 });
