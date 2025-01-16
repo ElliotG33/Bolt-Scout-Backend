@@ -49,44 +49,56 @@ router.post(
     // Successfully constructed event
     console.log('✅ Success:', event.id);
 
-    await connectDB();
+    // Lazy DB connection
+    try {
+      await connectDB();
+    } catch (err) {
+      console.error('Database connection error:', err);
+      res.status(500).send('Database connection error.');
+      return;
+    }
 
     // Handle the event
-    switch (event.type) {
-      case 'customer.subscription.created':
-        console.log('=customer.subscription.created', event.data.object);
-        await handleSubscriptionCreated(event.data.object);
-        break;
+    try {
+      switch (event.type) {
+        case 'customer.subscription.created':
+          console.log('=customer.subscription.created', event.data.object);
+          await handleSubscriptionCreated(event.data.object);
+          break;
 
-      case 'customer.subscription.updated':
-        console.log('=customer.subscription.updated', event.data.object);
-        await handleSubscriptionUpdated(event.data.object);
-        break;
+        case 'customer.subscription.updated':
+          console.log('=customer.subscription.updated', event.data.object);
+          await handleSubscriptionUpdated(event.data.object);
+          break;
 
-      case 'customer.subscription.deleted':
-        console.log('=customer.subscription.deleted', event.data.object);
-        await handleSubscriptionDeleted(event.data.object);
-        break;
+        case 'customer.subscription.deleted':
+          console.log('=customer.subscription.deleted', event.data.object);
+          await handleSubscriptionDeleted(event.data.object);
+          break;
 
-      case 'invoice.payment_succeeded':
-        console.log('=invoice.created', event.data.object);
-        await handleInvoicePaymentSucceeded(event.data.object);
-        break;
+        case 'invoice.payment_succeeded':
+          console.log('=invoice.created', event.data.object);
+          await handleInvoicePaymentSucceeded(event.data.object);
+          break;
 
-      case 'invoice.payment_failed':
-        console.log('=invoice.payment_failed', event.data.object);
-        await handleInvoicePaymentFailed(event.data.object);
-        break;
+        case 'invoice.payment_failed':
+          console.log('=invoice.payment_failed', event.data.object);
+          await handleInvoicePaymentFailed(event.data.object);
+          break;
 
-      case 'invoice.finalized':
-        console.log('=invoice.finalized', event.data.object);
-        await handleInvoiceFinalized(event.data.object);
-        break;
+        case 'invoice.finalized':
+          console.log('=invoice.finalized', event.data.object);
+          await handleInvoiceFinalized(event.data.object);
+          break;
 
-      default:
-        console.log(`Unhandled event type: ${event.type}`);
+        default:
+          console.warn(`⚠️ Unhandled event type: ${event.type}`, event);
+      }
+      res.status(200).json({ received: true });
+    } catch (err) {
+      console.error('Error handling event:', err);
+      res.status(500).send('Internal Server Error.');
     }
-    res.status(200).json({ received: true });
   }
 );
 export default router;
