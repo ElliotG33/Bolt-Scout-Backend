@@ -5,9 +5,10 @@ import { AddressInfo } from 'net';
 
 const app = express();
 
-// Route for root ("/") that shows the application is running
 app.get('/', (req, res) => {
-  res.status(200).send('Bolt Scout Backend Application is running!');
+  res
+    .status(200)
+    .json({ message: 'Bolt Scout Backend Application is running!' });
 });
 
 // Mount the webhook router
@@ -35,7 +36,4 @@ const server = app.listen(port, () => {
 
   console.log(`Server listening at http://${address}:${addressInfo.port}`);
 });
-//entry point
-export default (req: Request, res: Response) => {
-  app(req, res);
-};
+export default app;
