@@ -20,10 +20,5 @@
     "EMAIL_APP_PASS": "@email_app_pass",
     "STRIPE_SECRET_KEY": "@stripe_secret_key",
     "STRIPE_WEBHOOK_SECRET": "@stripe_webhook_secret"
-  },
-  "functions": {
-    "dist/index.js": {
-      "includeFiles": "dist/**/*"
-    }
   }
 }
