@@ -23,7 +23,7 @@
   },
   "functions": {
     "dist/index.js": {
-      "includeFiles": ["dist/**/*"]
+      "includeFiles": "dist/**/*"
     }
   }
 }
