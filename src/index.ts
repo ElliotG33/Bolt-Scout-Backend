@@ -27,6 +27,7 @@ const server = app.listen(port, () => {
   } else if (addressInfo.address === '0.0.0.0') {
     address = 'localhost';
   }
+
   console.log(`Server listening at http://${address}:${addressInfo.port}`);
   console.log(`Webhook endpoint available at http://localhost:${port}/webhook`);
 });
