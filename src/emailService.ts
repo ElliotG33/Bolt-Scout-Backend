@@ -17,12 +17,12 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
     return;
   }
 
-  const isLocalhost = APP_URL.toLowerCase().includes('localhost');
+  // const isLocalhost = APP_URL.toLowerCase().includes('localhost');
 
   const transporter = nodemailer.createTransport({
     host: SMTP_HOST,
     port: parseInt(SMTP_PORT || '587'),
-    secure: isLocalhost ? false : true,
+    secure: false,//isLocalhost ? false : true,
     auth: {
       user: SMTP_USER,
       pass: SMTP_PASS,
