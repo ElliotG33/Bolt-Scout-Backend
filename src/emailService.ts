@@ -21,7 +21,7 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
 
   try {
     await transporter.sendMail({
-      from: process.env.EMAIL_APP_USER,
+      from: 'info@scout-ai.org',
       to,
       subject,
       html,
