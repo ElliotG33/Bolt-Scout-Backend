@@ -1,8 +1,8 @@
 import nodemailer from 'nodemailer';
-import dotenv from 'dotenv'; // Import
+// import dotenv from 'dotenv'; // Import
 
 // Load environment variables
-dotenv.config();
+// dotenv.config();
 
 export const sendEmail = async (to: string, subject: string, html: string) => {
   const SMTP_HOST = process.env.SMTP_HOST;
@@ -22,7 +22,7 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
   const transporter = nodemailer.createTransport({
     host: SMTP_HOST,
     port: parseInt(SMTP_PORT || '587'),
-    secure: false,//isLocalhost ? false : true,
+    secure: false, //isLocalhost ? false : true,
     auth: {
       user: SMTP_USER,
       pass: SMTP_PASS,
