@@ -11,6 +11,8 @@ export interface IUser extends Document {
   forgotPasswordTokenExpiry: string;
   verifyToken: string;
   verifyTokenExpiry: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -42,6 +44,8 @@ const UserSchema = new Schema<IUser>({
   forgotPasswordTokenExpiry: Date,
   verifyToken: String,
   verifyTokenExpiry: Date,
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: new Date() },
 });
 
 const User: Model<IUser> =
