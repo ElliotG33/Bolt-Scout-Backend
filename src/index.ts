@@ -1,7 +1,12 @@
 import express, { Request, Response } from 'express';
+import dotenv from 'dotenv';
 import webhookRouter from './routes/webhook';
 import startSchedulerRouter from './routes/startScheduler';
 import { AddressInfo } from 'net';
+import { startScheduler } from './startScheduler';
+
+//load the env variable
+dotenv.config();
 
 const app = express();
 
@@ -16,6 +21,8 @@ app.use(webhookRouter);
 
 //Alert Scheduler
 app.use(startSchedulerRouter);
+
+// startScheduler();
 
 // Catch-all handler for invalid routes
 app.use((req: Request, res: Response) => {

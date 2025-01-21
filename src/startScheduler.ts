@@ -1,11 +1,7 @@
-import dotenv from 'dotenv'; // Import dotenv
-import cron from 'node-cron';
 import connectDB from './db';
-import { processAlerts } from './scheduler';
-import { sendEmail } from './emailService';
+import cron from 'node-cron';
 
-// Load environment variables
-dotenv.config();
+import { processAlerts } from './scheduler';
 
 export const startScheduler = async () => {
   try {
@@ -13,18 +9,16 @@ export const startScheduler = async () => {
 
     // Schedule the alert processor to run every hour
     // cron.schedule('* * * * *', async () => {
-      console.log(`[${new Date().toISOString()}] Running scheduled task...`);
-      try {
-        await processAlerts();
-        console.log(
-          `[${new Date().toISOString()}] Task completed successfully.`
-        );
-      } catch (error) {
-        console.error(
-          `[${new Date().toISOString()}] Error during task execution:`,
-          error
-        );
-      }
+    console.log(`[${new Date().toISOString()}] Running scheduled task...`);
+    try {
+      await processAlerts();
+      console.log(`[${new Date().toISOString()}] Task completed successfully.`);
+    } catch (error) {
+      console.error(
+        `[${new Date().toISOString()}] Error during task execution:`,
+        error
+      );
+    }
     // });
 
     // console.log(

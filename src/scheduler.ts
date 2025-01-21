@@ -22,8 +22,6 @@ export const processAlerts = async () => {
       ],
     });
 
-    console.log('==alerts', alerts);
-
     for (const alert of alerts) {
       await sendEmail(
         alert.email,
