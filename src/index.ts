@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 import webhookRouter from './routes/webhook';
 import startSchedulerRouter from './routes/startScheduler';
 import { AddressInfo } from 'net';
-import { startScheduler } from './startScheduler';
+// import { startScheduler } from './startScheduler';
+import redditRouter from './routes/reddit';
 
 //load the env variable
 dotenv.config();
@@ -21,6 +22,9 @@ app.use(webhookRouter);
 
 //Alert Scheduler
 app.use(startSchedulerRouter);
+
+//Reddit Search
+app.use(redditRouter);
 
 // startScheduler();
 
