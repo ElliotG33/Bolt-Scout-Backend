@@ -12,6 +12,7 @@ router.get('/reddit', async (req: Request, res: Response) => {
         sort,
         t,
         limit,
+        include_over_18: true,
       },
       headers: {
         'User-Agent': 'Scout-AI/1.0',
